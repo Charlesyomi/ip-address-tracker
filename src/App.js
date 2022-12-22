@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const IPGeolocationAPI_URL =
+  "https://geo.ipify.org/api/v2/country?apiKey=at_0c66UA3HLK61AmV0N9mZepyBSWmFh";
+
+// const IPAddress = " 8.8.8.8";
+
+const getIPInfo = async (IPAddress) => {
+  const response = await fetch(
+    `${IPGeolocationAPI_URL}${IPAddress ? `&${IPAddress}` : ""}`
   );
-}
+
+  const IPInfo = await response.json();
+
+  console.log(IPInfo);
+};
+
+// const getMappingInfo = async () => {};
+
+const App = () => {
+  useEffect(() => {
+    getIPInfo("8.8.8.8");
+  }, []);
+
+  return <h2>Set up Successful</h2>;
+};
 
 export default App;
