@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 import Map from "./Map.jsx";
+import InfoBoard from "./InfoBoard.jsx";
 
 import SearchIcon from "./search.svg";
 
@@ -23,6 +24,8 @@ const getIPInfo = async (IPAddress) => {
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [IPInfo, setIPInfo] = useState();
+
   const [IPCoordinates, setIPCoordinates] = useState("");
 
   const performSearch = async (searchTerm) => {
@@ -31,6 +34,8 @@ const App = () => {
     const IPCoordinates = [IPInfo.location.lat, IPInfo.location.lng];
 
     setIPCoordinates(IPCoordinates);
+
+    setIPInfo(IPInfo);
   };
 
   useEffect(() => {
@@ -39,6 +44,7 @@ const App = () => {
 
   return (
     <>
+      <h1>IP Address Tracker</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -46,7 +52,7 @@ const App = () => {
         }}
       >
         <input
-          placeholder="Search IP Address"
+          placeholder="Search for any IP address or domain"
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
@@ -55,7 +61,15 @@ const App = () => {
 
         <input type="image" alt="search" src={SearchIcon} />
       </form>
-      <h2>Set up Successful</h2>
+
+      {/*TODO: the location should consist not just of region but  country,region city and geonaId*/}
+      <InfoBoard
+        IPAddress={IPInfo ? IPInfo.ip : "loading..."}
+        location={IPInfo ? IPInfo.location.region : "loading ..."}
+        timezone={IPInfo ? IPInfo.location.timezone : "loading.."}
+        ISP={IPInfo ? IPInfo.isp : "loading"}
+      />
+
       {IPCoordinates !== "" ? (
         <Map coordinates={IPCoordinates} />
       ) : (
