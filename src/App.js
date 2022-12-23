@@ -1,4 +1,7 @@
+import React from "react";
 import { useEffect } from "react";
+
+import Map from "./Map.jsx";
 
 const IPGeolocationAPI_URL =
   "https://geo.ipify.org/api/v2/country?apiKey=at_0c66UA3HLK61AmV0N9mZepyBSWmFh";
@@ -18,11 +21,16 @@ const getIPInfo = async (IPAddress) => {
 // const getMappingInfo = async () => {};
 
 const App = () => {
-  useEffect(() => {
-    getIPInfo("8.8.8.8");
-  }, []);
+  // useEffect(() => {
+  //   getIPInfo("8.8.8.8");
+  // }, []);
 
-  return <h2>Set up Successful</h2>;
+  return (
+    <>
+      <h2>Set up Successful</h2>
+      <Map />
+    </>
+  );
 };
 
 export default App;
